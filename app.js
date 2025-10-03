@@ -94,6 +94,15 @@ app.get("/like/:id" ,isLoggedIn, async function(req,res){
  res.redirect("/profile");
 })
 
+app.get("/edit/:id" , async function(req,res){
+  let post = await postModel.findOne({_id:req.params.id}).populate("user");
+  res.render("edit.ejs" ,{post});
+})
+app.post("/update/:id" ,isLoggedIn,async function(req,res){
+   let post = await postModel.findOneAndUpdate({_id:req.params.id}, {content: req.body.content});
+   res.redirect("/profile");
+});
+
 //MIddleware to cheak logged in state before entering protected routes
 function isLoggedIn(req, res ,next){
  

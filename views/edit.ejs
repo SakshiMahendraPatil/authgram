@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Edit post</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-zinc-600 flex items-center justify-center font-sans">
+
+  <main class="w-full max-w-md bg-zinc-100/90 border border-zinc-200 rounded-2xl shadow-md p-6">
+    <!-- Top row: Logout -->
+    <div class="flex justify-end">
+      <a href="/logout"
+         class="text-zinc-600 hover:text-zinc-600 text-sm font-medium px-3 py-1 rounded-md border border-zinc-200 bg-zinc-50 hover:bg-zinc-200 transition">
+        Logout
+      </a>
+    </div>
+
+    <!-- Title -->
+    <header class="text-center mt-3 mb-5">
+      <h3 class="text-zinc-800 text-lg font-semibold">Edit your post</h3>
+    </header>
+
+    <!-- Edit form -->
+    <form action="/update/<%=post._id%>" method="POST" class="space-y-4">
+      <label for="content" class="sr-only">Edit post</label>
+
+      <textarea
+        id="content"
+        name="content"
+        rows="5"
+        class="w-full resize-none rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 text-zinc-800 text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-300 focus:border-transparent"
+        placeholder="Edit your post..."
+      ><%= post.content %></textarea>
+
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </main>
+
+</body>
+</html>
