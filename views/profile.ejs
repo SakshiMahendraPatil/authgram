@@ -11,7 +11,11 @@
   <div class="w-full max-w-5xl mt-10 px-4">
 
     <!-- Welcome Message -->
-    <div class="text-center mb-6">
+    <div class="flex items-center justify-center gap-3 mb-6">
+      <div class=" w-10 h-10  rounded-full overflow-hidden">
+        <img class="w-full h-full object-cover" id="profilepic" src="/images/<%=user.profilepic %>"  alt="">
+      
+      </div>
       <h1 class="text-xl text-gray-900 font-bold">
        Welcome , <span class="font-bold text-pink-600 ">  <%= user.username %></span>
       </h1>
@@ -68,7 +72,7 @@
     </div>
 
   </div>
-
+  <script src="/javascripts/script.js"></script>
 </body>
 
 
