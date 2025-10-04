@@ -5,12 +5,18 @@ const userModel = require('./models/user');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const postModel =require('./models/post');
+const crypto = require('crypto');
+const path = require('path');
+
+const multerconfig = require('./config/multerconfig.js');
 
 app.use(cookieParser());
 
 app.set("view engine", 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname,"public")));
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 app.get("/", function (req, res) {
     res.render("index.ejs");
@@ -18,6 +24,16 @@ app.get("/", function (req, res) {
 app.get("/login", function (req, res) {
     res.render("login.ejs");
 });
+
+app.get("/profile/upload" , (req,res)=>{
+  res.render("profileupload.ejs");
+})
+app.post("/upload" , isLoggedIn ,multerconfig.single("image") , async (req,res)=>{
+  let user = await userModel.findOne({email:req.user.email});
+  user.profilepic = req.file.filename;
+  await user.save();
+  res.redirect("/profile");
+})
 
 app.post("/register", async function (req, res) {
   
@@ -102,6 +118,8 @@ app.post("/update/:id" ,isLoggedIn,async function(req,res){
    let post = await postModel.findOneAndUpdate({_id:req.params.id}, {content: req.body.content});
    res.redirect("/profile");
 });
+
+
 
 //MIddleware to cheak logged in state before entering protected routes
 function isLoggedIn(req, res ,next){
